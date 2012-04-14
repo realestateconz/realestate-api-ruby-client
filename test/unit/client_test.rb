@@ -27,13 +27,13 @@ class ClientTest < ActiveSupport::TestCase
       api_sig = @client.send(:calculate_api_sig, "suburbs/", :a => 5)
 
       # here's a signature I prepared earlier...
-      assert_equal "139a0697e7cb5ecd7f989157831f2af1", api_sig
+      assert_equal "c742042c6a82e517ddd637e1ee027e2d", api_sig
     end
 
     should "order the params correctly" do
       api_sig = @client.send(:calculate_api_sig, "suburbs/", :b => "Z", :a => [6, 3], "baz" => 45)
 
-      assert_equal "d5e86b009fde203a7e600e6f9f94c8aa", api_sig
+      assert_equal "1500f0d54ae8bef8c10a9d42e9a694fb", api_sig
     end
 
   end
