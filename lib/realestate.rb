@@ -1,6 +1,7 @@
-require 'active_support'
+require 'active_support/all'
 require 'httparty'
-require 'realestate/client'
+require 'digest/md5'
+require 'cgi'
 
 module Realestate
 
@@ -9,5 +10,8 @@ module Realestate
 
   # exceptions...
   class CredentialsRequired < StandardError; end
+  class AuthenticationError < StandardError; end
 
 end
+
+require 'realestate/client'
