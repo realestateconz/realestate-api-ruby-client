@@ -82,7 +82,7 @@ module Realestate
         sorted_params = params_array.sort_by { |k, v| "#{k}-#{v}" }
 
         # Concatenate api secret, request path, sorted params
-        concatenated_string = [ self.private_key, "#{Realestate::API_VERSION}", request_path, sorted_params.to_s ].join("/")
+        concatenated_string = [ self.private_key, "#{Realestate::API_VERSION}", request_path, sorted_params.join ].join("/")
 
         Digest::MD5.hexdigest(concatenated_string)
       end
