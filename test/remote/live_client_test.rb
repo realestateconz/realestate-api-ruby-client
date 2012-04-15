@@ -3,6 +3,14 @@ require File.join(File.dirname(__FILE__), '../test_helper.rb')
 # this file tests the live client
 class LiveClientTest < ActiveSupport::TestCase
 
+  setup do
+    WebMock.disable!
+  end
+
+  teardown do
+    WebMock.enable!
+  end
+
   context "authentication" do
     setup do
       @client = create_test_client

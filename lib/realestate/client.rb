@@ -88,7 +88,6 @@ module Realestate
       end
 
       def process_response(response)
-        puts @reponse.body
         case response.code
         when 200..299
           response.parsed_response

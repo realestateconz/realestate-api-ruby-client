@@ -44,7 +44,15 @@ class ClientTest < ActiveSupport::TestCase
     end
 
     should "work with mock data" do
-      flunk
+      stub_request(:get, "http://api.realestate.co.nz/1/suburbs/")\
+        .with(:query => { :api_sig => "a9c0f5009e9e2bf1f61acd10b6c2640c", :api_key => "123" })\
+        .to_return(:body => fixture_file("suburbs.json"), :headers => { "Content-Type" => "text/json" })
+
+      results = @client.suburbs
+
+      assert results.is_a?(Array)
+      assert_equal 1821, results.size
+      assert_equal "Fiji", results.first["name"]
     end
   end
 
@@ -54,7 +62,27 @@ class ClientTest < ActiveSupport::TestCase
     end
 
     should "return all pages with pagination" do
-      flunk
+
+      # first page request
+      stub_request(:get, "http://api.realestate.co.nz/1/listings/")\
+        .with(:query => { :api_sig => "30f4a7600709c2fe2af38fb2074d6cb9", :format => "id",
+                          :district_id => "1", :api_key => "123", :max_results => "20" })\
+        .to_return(:body    => fixture_file("listings_page_1.json"),
+                   :headers => { "Content-Type" => "text/json" })
+
+      # second page request - need to do it like this rather than chaining to_return as
+      # the API sig changes when we add the offset call :)
+      stub_request(:get, "http://api.realestate.co.nz/1/listings/")\
+        .with(:query => { :api_sig => "e7d26b8c64dbe017b0a9b5a7cf0502c2", :format => "id",
+                          :district_id => "1", :api_key => "123", :max_results => "20", :offset => "20" })\
+        .to_return(:body    => fixture_file("listings_page_2.json"),
+                   :headers => { "Content-Type" => "text/json" })
+
+      results = @client.listings(:district_id => 1, :format => "id", :max_results => 20)
+
+      assert results.is_a?(Array)
+      assert_equal 24, results.size
+      assert_equal 1222760, results.first["id"]
     end
   end
 

@@ -17,7 +17,6 @@ else
   TEST_CREDENTIALS = { :public_key => 123, :private_key => 456}
 end
 
-
-module TestHelper
-
+def fixture_file(filename)
+  File.read(File.join(File.dirname(__FILE__), "fixtures", filename))
 end
