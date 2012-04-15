@@ -1,6 +1,8 @@
 Realestate.co.nz API Client for Ruby
 ====================================
 
+[![Build Status](https://secure.travis-ci.org/nikz/realestate-ruby.png)](http://travis-ci.org/nikz/realestate-ruby)
+
 *NB:* This API Client is currently under active development, things may change rapidly :)
 
 All methods return the parsed JSON from the API, so this is usually an array of hashes. For documentation on
