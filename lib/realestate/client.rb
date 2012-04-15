@@ -14,15 +14,17 @@ module Realestate
       end
     end
 
-    def suburbs
-      process_response(request(:get, "/suburbs/"))
+    %w(suburbs districts regions listing_types pricing_methods).each do |cat_name|
+      define_method(cat_name) do
+        request(:get, cat_name.dasherize)
+      end
     end
 
     private
 
       def request(method, path, params = {})
         query = prepare_params(path, params).map { |x| x.join("=") }.join("&")
-        process_response(self.class.send(method, path, :query => query))
+        process_response(self.class.send(method, "/#{path}/", :query => query))
       end
 
       # Adds necessary authentication parameters to the passed request parameters,
@@ -50,15 +52,15 @@ module Realestate
         # Sort your URL argument list into alphabetical (ASCII) order based on the parameter name and value. e.g. a=B, foo=1, bar=2, baz=P, baz=3 sorts to a=B, bar=2, baz=3, baz=P, foo=1
         sorted_params = params_array.sort_by { |k, v| "#{k}-#{v}" }
 
-        # Concatenate api secret, request path (no slashes as we're joining with those later), sorted params
-        concatenated_string = [ self.private_key, "#{Realestate::API_VERSION}", request_path.gsub("/", ""), sorted_params.to_s ].join("/")
+        # Concatenate api secret, request path, sorted params
+        concatenated_string = [ self.private_key, "#{Realestate::API_VERSION}", request_path, sorted_params.to_s ].join("/")
 
         Digest::MD5.hexdigest(concatenated_string)
       end
 
       def process_response(response)
         if response.success?
-          response
+          response.parsed_response
         elsif response.code == 401
           raise AuthenticationError.new(response.body)
         end

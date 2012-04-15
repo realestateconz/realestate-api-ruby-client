@@ -26,7 +26,7 @@ class LiveClientTest < ActiveSupport::TestCase
 
   end
 
-  context "listing suburbs" do
+  context "category methods" do
     setup do
       @client = create_test_client
     end
@@ -34,8 +34,45 @@ class LiveClientTest < ActiveSupport::TestCase
     should "be able to list re.co.nz suburbs" do
       result = @client.suburbs
 
-      raise result.inspect
+      assert fiji = result.detect { |s| s["id"] == 3312 }
+
+      assert_equal "Fiji", fiji["name"]
+      assert_equal 54,     fiji["region_id"]
     end
+
+    should "be able to list re.co.nz districts" do
+      result = @client.districts
+
+      assert fiji = result.detect { |s| s["id"] == 1 }
+
+      assert_equal "Fiji", fiji["name"]
+      assert_equal 54,     fiji["region_id"]
+    end
+
+    should "be able to list re.co.nz regions" do
+      result = @client.regions
+
+      assert northland = result.detect { |s| s["id"] == 34 }
+
+      assert_equal "Northland", northland["name"]
+    end
+
+    should "be able to list re.co.nz listing types" do
+      result = @client.listing_types
+
+      assert residential = result.detect { |s| s["id"] == 1 }
+
+      assert_equal "Residential", residential["name"]
+      assert residential["sub_types"].map { |st| st["name"] }.include?("Apartment")
+    end
+
+    should "be able to list re.co.nz pricing methods" do
+      result = @client.pricing_methods
+
+      assert fixed = result.detect { |r| r["id"] == 1 }
+      assert_equal "Fixed Price", fixed["name"]
+    end
+
   end
 
   private
