@@ -29,3 +29,8 @@ Category methods (note that dashes in API paths are converted to underscores for
 
     client.pricing_methods
     #=> [ { "id" => 1, "name" => "Fixed Price" ... } ]
+
+Listing searching, will concatenate pages automatically. Search paramters as per Realestate.co.nz documentation.
+
+    client.listings(:district_id => 1, :format => "id")
+    #=> [ { "id" : 1234, ... }]
