@@ -27,15 +27,35 @@ class ClientTest < ActiveSupport::TestCase
       api_sig = @client.send(:calculate_api_sig, "suburbs/", :a => 5)
 
       # here's a signature I prepared earlier...
-      assert_equal "c742042c6a82e517ddd637e1ee027e2d", api_sig
+      assert_equal "963c93415aaba0b605d93daea7faa642", api_sig
     end
 
     should "order the params correctly" do
       api_sig = @client.send(:calculate_api_sig, "suburbs/", :b => "Z", :a => [6, 3], "baz" => 45)
 
-      assert_equal "1500f0d54ae8bef8c10a9d42e9a694fb", api_sig
+      assert_equal "d1902758cc1feeea3c0a9b6c96d3f7d0", api_sig
     end
 
+  end
+
+  context "category methods" do
+    setup do
+      @client = create_test_client
+    end
+
+    should "work with mock data" do
+      flunk
+    end
+  end
+
+  context "requesting listings" do
+    setup do
+      @client = create_test_client
+    end
+
+    should "return all pages with pagination" do
+      flunk
+    end
   end
 
 

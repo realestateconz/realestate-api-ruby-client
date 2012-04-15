@@ -20,6 +20,35 @@ module Realestate
       end
     end
 
+    # List / Search listings
+    def listings(options = {})
+      # max results is more like "results per page"
+      options[:max_results] ||= 100
+      options[:format]      ||= "full"
+
+      sort_column    = options.delete(:sort)
+      sort_direction = options.delete(:sort_direction)
+      # -price_min for price_min, descending etc..
+      options[:sort_order] = "#{"-" if sort_direction == :desc}#{sort_column}" if sort_column.present?
+
+      listings = []
+      more     = true
+      offset   = 0
+
+      while more do
+        result = request(:get, "listings", options)
+
+        listings = listings + result["listings"]
+
+        offset = offset + options[:max_results]
+        options[:offset] = offset
+
+        more = result["more"]
+      end
+
+      listings
+    end
+
     private
 
       def request(method, path, params = {})
@@ -59,10 +88,16 @@ module Realestate
       end
 
       def process_response(response)
-        if response.success?
+        puts @reponse.body
+        case response.code
+        when 200..299
           response.parsed_response
-        elsif response.code == 401
+        when 401
           raise AuthenticationError.new(response.body)
+        when 400
+          raise ApiError.new(response)
+        else
+          raise "Unhandled Response Code: #{response.code}: #{response.body}"
         end
       end
 

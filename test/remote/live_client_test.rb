@@ -75,6 +75,26 @@ class LiveClientTest < ActiveSupport::TestCase
 
   end
 
+  context "searching for listings" do
+    setup do
+      @client = create_test_client
+    end
+
+    should "be able to look for listings in Fiji" do
+      fiji_listings = @client.listings(:district_id => 1, :format => "id")
+      assert !fiji_listings.empty?
+    end
+
+    should "be able to search for listing ids" do
+      fiji_listings = @client.listings(:district_id => 1, :format => "id")
+
+      ids = fiji_listings.map { |f| f["id"] }[0...3]
+
+      listings_by_id = @client.listings(:id => ids)
+      assert_equal 3, listings_by_id.size
+    end
+  end
+
   private
 
     def create_test_client

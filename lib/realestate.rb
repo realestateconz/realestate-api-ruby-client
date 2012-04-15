@@ -11,6 +11,7 @@ module Realestate
   # exceptions...
   class CredentialsRequired < StandardError; end
   class AuthenticationError < StandardError; end
+  class ApiError < StandardError; end
 
 end
 

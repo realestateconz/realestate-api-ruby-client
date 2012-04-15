@@ -1,6 +1,7 @@
 require 'rubygems'
 
 require 'test/unit'
+require 'webmock/test_unit'
 require 'shoulda'
 require 'redgreen'
 require 'yaml'
