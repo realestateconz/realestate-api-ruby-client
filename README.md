@@ -1,13 +1,11 @@
 First cut of Realestate.co.nz API Client
 
 Creating a new client:
-``` ruby
-  client = Realestate::Client.new(:public_key => YOUR_PUBLIC_KEY, :private_key => YOUR_PRIVATE_KEY)
-  #=> <RealEstate::Client...>
-```
+
+    client = Realestate::Client.new(:public_key => YOUR_PUBLIC_KEY, :private_key => YOUR_PRIVATE_KEY)
+    #=> <RealEstate::Client...>
 
 Requesting a list of suburbs:
-``` ruby
-  client.suburbs
-  #=> [ { id : 1234, name : "Test" .. } ]
-```
+
+    client.suburbs
+    #=> [ { id : 1234, name : "Test" .. } ]
