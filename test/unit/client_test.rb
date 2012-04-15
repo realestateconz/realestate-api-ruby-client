@@ -84,6 +84,19 @@ class ClientTest < ActiveSupport::TestCase
       assert_equal 24, results.size
       assert_equal 1222760, results.first["id"]
     end
+
+    should "be able to get the details of an individual listing" do
+
+      stub_request(:get, "http://api.realestate.co.nz/1/listings/1759612/")\
+        .with(:query => { :api_sig => "583c8eee3680297a6c7fba313328c662", :format => "basic", :api_key => "123" })\
+        .to_return(:body    => fixture_file("listing_detail.json"),
+                   :headers => { "Content-Type" => "text/json" })
+
+      results = @client.listing(1759612)
+
+      assert_equal "Vendors Gone!", results["teaser"]
+      assert_equal ["5 Laurel Lane","Linwood","Christchurch City","Canterbury"], results["address"]["text"]
+    end
   end
 
 

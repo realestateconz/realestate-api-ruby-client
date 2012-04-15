@@ -49,6 +49,11 @@ module Realestate
       listings
     end
 
+    def listing(id, options = {})
+      options[:format] ||= "basic"
+      request(:get, "listings/#{id}", options)
+    end
+
     private
 
       def request(method, path, params = {})

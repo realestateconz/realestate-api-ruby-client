@@ -103,6 +103,21 @@ class LiveClientTest < ActiveSupport::TestCase
     end
   end
 
+  context "getting an individual listing" do
+    setup do
+      @client = create_test_client
+    end
+
+    should "work" do
+      fiji_listings = @client.listings(:district_id => 1, :format => "id")
+
+      listing_id = fiji_listings.first["id"]
+
+      assert listing = @client.listing(listing_id)
+      assert_not_nil listing["teaser"]
+    end
+  end
+
   private
 
     def create_test_client
