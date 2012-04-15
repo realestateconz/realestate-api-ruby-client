@@ -16,3 +16,4 @@ module Realestate
 end
 
 require 'realestate/client'
+require 'realestate/image'
