@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
 
   gem.authors = ["Nik Wakelin", "Jared Armstrong", "Glen Barnes"]
   gem.description = %q{A Ruby wrapper for the Realestate.co.nz API.}
+  gem.summary = "Ruby Realestate.co.nz API Client"
   gem.email = ['nik@200square.co.nz', 'jared@200square.co.nz', 'barnaclebarnes@gmail.com']
   gem.files = `git ls-files`.split("\n")
   gem.homepage = 'https://github.com/realestateconz/realestate-api-ruby-client'
