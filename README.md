@@ -11,7 +11,7 @@ specific elements, see the PDF provided by Realestate.co.nz.
 Creating a new client:
 
     client = Realestate::Client.new(:public_key => YOUR_PUBLIC_KEY, :private_key => YOUR_PRIVATE_KEY)
-    #=> <RealEstate::Client...>
+    #=> <Realestate::Client...>
 
 Category methods (note that dashes in API paths are converted to underscores for Ruby method names):
 
@@ -34,3 +34,19 @@ Listing searching, will concatenate pages automatically. Search paramters as per
 
     client.listings(:district_id => 1, :format => "id")
     #=> [ { "id" : 1234, ... }]
+
+The `Realestate::Image` class represents an image on the image server. You can create images via ID or URL:
+
+    image = Realestate::Image.new(12345)
+    # => <Realestate::Image... >
+
+    image = Realestate::Image.new("http://imageserver.realestate.co.nz/1234")
+    # => <Realestate::Image... >
+
+You can download images using the download method, and the w/h/bg/mode parameters as per the documentation:
+
+    image = Realestate::Image.new(12345)
+    image.download(:w => 200, :h => 100)
+    # => <IO ... >
+
+
