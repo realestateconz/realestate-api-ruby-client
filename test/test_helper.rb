@@ -3,7 +3,6 @@ require 'rubygems'
 require 'test/unit'
 require 'webmock/test_unit'
 require 'shoulda'
-require 'redgreen'
 require 'yaml'
 
 require File.dirname(__FILE__) + '/../lib/realestate.rb'
