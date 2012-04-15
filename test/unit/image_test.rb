@@ -12,6 +12,11 @@ class ImageTest < ActiveSupport::TestCase
       assert_equal "http://imageserver.realestate.co.nz/id/123?w=200", @image.url(:w => 200)
     end
 
+    should "be able to create from a url too" do
+      @url_image = Realestate::Image.new("http://imageserver.realestate.co.nz/id/123")
+      assert_equal 123, @url_image.id
+    end
+
     should "be able to download image" do
       nyan_cat = File.open(File.join(File.dirname(__FILE__), "..", "fixtures", "nyan-cat.gif"))
 

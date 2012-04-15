@@ -7,8 +7,12 @@ module Realestate
     @@base_uri = "http://imageserver.realestate.co.nz/id/"
     attr_accessor :id
 
-    def initialize(id)
-      @id = id
+    def initialize(id_or_url)
+      if id_or_url.to_s =~ /\A[0-9]+\Z/
+        @id = id_or_url.to_i
+      else
+        @id = id_or_url.scan(/\/id\/([0-9]+)/).flatten.first.to_i
+      end
     end
 
     def url(options = {})
