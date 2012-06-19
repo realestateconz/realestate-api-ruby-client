@@ -24,7 +24,7 @@ module Realestate
     def listings(options = {})
       # max results is more like "results per page"
       options[:max_results] ||= 100
-      options[:format]      ||= "full"
+      options[:format]      ||= "basic"
 
       sort_column    = options.delete(:sort)
       sort_direction = options.delete(:sort_direction)
